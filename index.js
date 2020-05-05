@@ -1,42 +1,40 @@
 const express = require("express");
-//const bodyParser = require("body-parser");
+
+const sequelize = require("./db");
+const user = require("./routes/users");
 
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded())
 
-const getRoot = (req, res) => {
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection has been established successfully.");
+  })
+  .catch((err) => {
+    console.error("Unable to connect to the database:", err);
+  });
+
+// This tells our app to use this file for the /user route.
+app.use("/user", user);
+
+app.get("/", (req, res) => {
   res.json({ status: "success" });
-};
+});
 
-let data = {
-  message: "Success",
-  data: {
-    name: "Yusuf",
-    Ocuppation: "Software Engineer",
-  },
-};
+// variable should be outside of the API's scope.
+let data = null;
 
-const createData = (req, res) => {
+app.post("/data", (req, res) => {
   // We assign the body of the request to the data variable.
   data = req.body;
   // We send the data variable in the response.
   res.json(data);
-};
+});
 
-const getData = (req, res) => {
-  //data comes from the variable we declared and mutated earlier
+app.get("/data", (req, res) => {
+  //data comes from the variable we declared and mutared earlier
   res.json(data);
-};
-
-app.get("/", getRoot);
-
-// variable should be outside of the API's scope.
-
-//app.post("/data", createData);
-
-//app.get("/data", getData);
-
-app.route("/data").get(getData).post(createData);
+});
 
 app.listen(3000, () => console.log("Listening on port 3000"));
