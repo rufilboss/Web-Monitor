@@ -1,21 +1,21 @@
-const Sequelize = require("sequelize");
-const bcrypt = require("bcryptjs");
+const Sequelize = require('sequelize');
+const bcrypt = require('bcryptjs');
 
-const sequelize = require("../db");
+const sequelize = require('../db');
 
-const User = sequelize.define("user", {
+const User = sequelize.define('user', {
   email: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING
   },
   password: {
-    type: Sequelize.STRING,
-  },
+    type: Sequelize.STRING
+  }
 });
 
 User.beforeCreate((user, options) => {
   let salt = bcrypt.genSaltSync(10);
   let hash = bcrypt.hashSync(user.password, salt);
-  return (user.password = hash);
-});
+  return user.password = hash;
+})
 
 module.exports = User;
