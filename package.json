@@ -1,7 +1,7 @@
 {
   "name": "first-api",
   "version": "1.0.0",
-  "description": "Create Web Monitorin Software",
+  "description": "Create Web Monitoring Software",
   "main": "index.js",
   "scripts": {
     "test": "mocha --timeout 10000",
