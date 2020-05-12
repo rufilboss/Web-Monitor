@@ -7,7 +7,7 @@ let dbUrl = null;
 if (process.env.NODE_ENV === "test") dbUrl = process.env.dbUrl;
 else {
   // If not we will use our production database
-  dbUrl = "postgres://yusuf:mypass@localhost:5432/yusuf";
+  dbUrl = "postgres://yusuf:123456@localhost:5432/yusuf";
 }
 // We initialize with our database url variable
 const sequelize = new Sequelize(dbUrl, {
